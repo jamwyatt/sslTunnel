@@ -28,7 +28,6 @@ static int password_cb(char *buf,int num,
 
 
 SSL_CTX *initialize_ctx(char *keyfile,char *password) {
-    SSL_METHOD *meth;
     SSL_CTX *ctx;
 
     if(!bio_err){
@@ -44,8 +43,7 @@ SSL_CTX *initialize_ctx(char *keyfile,char *password) {
     signal(SIGPIPE,sigpipe_handle);
 
     /* Create our context*/
-    meth=SSLv23_method();
-    ctx=SSL_CTX_new(meth);
+    ctx=SSL_CTX_new(TLS_method());
 
     /* Load our keys and certificates*/
     if(!(SSL_CTX_use_certificate_chain_file(ctx,
